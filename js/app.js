@@ -4,12 +4,21 @@ const currencies = document.querySelector('#moneda');
 const cryptos = document.querySelector('#criptomonedas');
 const result = document.querySelector('#resultado');
 
+//* Variables
+const searchObj = {
+  moneda: '',
+  criptomoneda: ''
+};
+
 //* Promise
 const getCryptos = cryptocurrencies => Promise.resolve(cryptocurrencies);
 
 //* Event listeners
 document.addEventListener('DOMContentLoaded', () => {
   cryptoQuery();
+  form.addEventListener('submit', submitForm);
+  currencies.addEventListener('change', readValue);
+  cryptos.addEventListener('change', readValue);
 });
 
 //* Functions
@@ -31,3 +40,20 @@ function selectCryptos(cryptocurrencies) {
     cryptos.appendChild(option);
   });
 }
+
+function readValue(e) {
+  searchObj[ e.target.name ] = e.target.value;
+}
+
+function submitForm(e) {
+  e.preventDefault();
+
+  const { moneda, criptomoneda } = searchObj;
+
+  if (moneda === '' || criptomoneda === '') {
+    showAlert('Todos los campos son obligatorios');
+    return;
+  }
+}
+
+function showAlert(message) { }
