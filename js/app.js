@@ -56,4 +56,19 @@ function submitForm(e) {
   }
 }
 
-function showAlert(message) { }
+function showAlert(message) {
+  const ALERT_DURATION = 3000;
+  const alertExists = document.querySelector('.error');
+  const alert = document.createElement('DIV');
+
+  if (!alertExists) {
+    alert.textContent = message;
+    alert.classList.add('error');
+    form.appendChild(alert);
+
+    setTimeout(() => {
+      alert.remove();
+    }, ALERT_DURATION);
+  }
+
+}
