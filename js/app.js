@@ -78,6 +78,8 @@ function queryAPI() {
   const { moneda, criptomoneda } = searchObj;
   const URL = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${criptomoneda}&tsyms=${moneda}`;
 
+  displaySpinner();
+
   fetch(URL)
     .then(response => response.json())
     .then(data => displayPrice(data.DISPLAY[ criptomoneda ][ moneda ]));
@@ -99,7 +101,7 @@ function displayPrice(price) {
   highPrice.innerHTML = `Precio máximo del día: <span>${HIGHDAY}</span>`;
   lowPrice.innerHTML = `Precio mínimo del día: <span>${LOWDAY}</span>`;
   changePercent.innerHTML = `Variación del día (%): <span>${CHANGEPCT24HOUR}%</span>`;
-  timeUpdated.innerHTML = `Última actualización: <span>${new Date(LASTUPDATE * 1000).toLocaleString()}</span>`;
+  timeUpdated.innerHTML = `Última actualización: <span>${LASTUPDATE}</span>`;
 
   result.appendChild(currentPrice);
   result.appendChild(highPrice);
@@ -112,6 +114,16 @@ function clearHTML() {
   while (result.firstChild) {
     result.removeChild(result.firstChild);
   }
+}
 
-  console.log(result);
+function displaySpinner() {
+  clearHTML();
+
+  const spinner = document.createElement('DIV');
+  spinner.classList.add('spinner');
+  spinner.innerHTML = `
+    <div class="cube1"></div>
+    <div class="cube2"></div>`;
+
+  result.appendChild(spinner);
 }

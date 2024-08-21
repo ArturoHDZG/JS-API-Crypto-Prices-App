@@ -4,6 +4,8 @@
 
 2024-08-15: PROJECT START
 
+2024-08-21: PROJECT END
+
 This project is a learning exercise aimed at creating an efficient and user-friendly system for querying Cryptocurrencies prices from the CryptoCompare API. It allows users to search and compare current cryptocurrencies prices in US dollars, EUR euros, GBP pound sterling and MXN mexican pesos.
 
 ## Features
