@@ -54,6 +54,8 @@ function submitForm(e) {
     showAlert('Todos los campos son obligatorios');
     return;
   }
+
+  queryAPI();
 }
 
 function showAlert(message) {
@@ -70,5 +72,44 @@ function showAlert(message) {
       alert.remove();
     }, ALERT_DURATION);
   }
+}
 
+function queryAPI() {
+  const { moneda, criptomoneda } = searchObj;
+  const URL = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${criptomoneda}&tsyms=${moneda}`;
+
+  fetch(URL)
+    .then(response => response.json())
+    .then(data => displayPrice(data.DISPLAY[ criptomoneda ][ moneda ]));
+}
+
+function displayPrice(price) {
+  clearHTML();
+
+  const { PRICE, HIGHDAY, LOWDAY, CHANGEPCT24HOUR, LASTUPDATE } = price;
+  const currentPrice = document.createElement('P');
+  const highPrice = document.createElement('P');
+  const lowPrice = document.createElement('P');
+  const changePercent = document.createElement('P');
+  const timeUpdated = document.createElement('P');
+
+  currentPrice.classList.add('precio');
+  currentPrice.innerHTML = `Precio de hoy: <span>${PRICE}</span>`;
+
+  highPrice.innerHTML = `Precio máximo del día: <span>${HIGHDAY}</span>`;
+  lowPrice.innerHTML = `Precio mínimo del día: <span>${LOWDAY}</span>`;
+  changePercent.innerHTML = `Variación del día (%): <span>${CHANGEPCT24HOUR}%</span>`;
+  timeUpdated.innerHTML = `Última actualización: <span>${new Date(LASTUPDATE * 1000).toLocaleString()}</span>`;
+
+  result.appendChild(currentPrice);
+  result.appendChild(highPrice);
+  result.appendChild(lowPrice);
+  result.appendChild(changePercent);
+  result.appendChild(timeUpdated);
+}
+
+function clearHTML() {
+  while (result.firstChild) {
+    result.removeChild(result.firstChild);
+  }
 }
