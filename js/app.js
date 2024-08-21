@@ -112,4 +112,6 @@ function clearHTML() {
   while (result.firstChild) {
     result.removeChild(result.firstChild);
   }
+
+  console.log(result);
 }
